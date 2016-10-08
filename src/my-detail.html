@@ -1,0 +1,76 @@
+<!--
+@license
+Copyright (c) 2016 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+-->
+
+<link rel="import" href="../bower_components/polymer/polymer.html">
+<link rel="import" href="../bower_components/iron-image/iron-image.html">
+<link rel="import" href="../bower_components/google-youtube/google-youtube.html">
+
+<link rel="import" href="shared-styles.html">
+
+<dom-module id="my-detail">
+    <template>
+    <style is="custom-style">
+      .flex-horizontal {
+        @apply(--layout-horizontal);
+      }
+      .flexchild {
+        @apply(--layout-flex);
+      }
+    </style>
+    <!-- app-location Should not be needed here?! -->
+    <app-location route="{{route}}"></app-location>
+    <app-route
+        route="[[route]]"
+        pattern="/detail/:sketch"
+        data="{{routeData}}"></app-route>
+
+    <my-data
+            id="categoryData"
+            sketch-name="[[routeData.sketch]]"
+            sketch="{{sketch}}">
+    </my-data>
+
+
+    <div class="container flex-horizontal">
+       <div class="flexchild" style="background-color:red">
+
+         <google-youtube
+           chromeless
+           video-id="[[sketch.video]]"
+           width="100%"
+           rel="0"
+           start="5"
+           autoplay="0"></google-youtube>
+
+       </div>
+       <div class="flexchild" style="background-color:green">
+         <h1>View [[sketch.title]]</h1>
+         <iron-image style="width:400px; height:400px;" sizing="contain" src="[[sketch.image]]"></iron-image>
+       </div>
+     </div>
+  </template>
+
+    <script>
+        Polymer({
+            is: 'my-detail',
+            properties: {
+                sketch: Object,
+                route: Object,
+                routeData: {
+                    type: Object,
+                    observer: 'logRoute'
+                }
+            },
+            logRoute: function(data) {
+                console.log(data);
+            }
+        });
+    </script>
+</dom-module>

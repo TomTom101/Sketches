@@ -1,0 +1,77 @@
+<!--
+@license
+Copyright (c) 2016 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+-->
+
+<link rel="import" href="../bower_components/polymer/polymer.html">
+
+<dom-module id="my-data">
+
+  <script>
+  (function() {
+    var sketchesList = [
+      {
+        name: 'sketch1',
+        title: 'Sketch A',
+        image: 'https://www.native-instruments.com/typo3temp/pics/img-ce-maschine-jam_subpage_feature-details_05_intuitivehardware_01-15f6603588ef58a16a9510839f65ab79-d@2x.jpg',
+        video: '1_YyACZrj6E'
+      },
+      {
+        name: 'sketch2',
+        title: 'Sketch B',
+        image: '/images/image2.jpg',
+        video: 'bQyyuVP56fQ'
+      },
+      {
+        name: 'sketch3',
+        title: 'Sketch C',
+        image: '/images/image3.jpg',
+        video: '1_YyACZrj6E'
+      }
+    ];
+
+    Polymer({
+
+      is: 'my-data',
+
+      properties: {
+
+        sketchName: String,
+
+        sketches: {
+          type: Array,
+          value: sketchesList,
+          readOnly: true,
+          notify: true,
+        },
+
+        sketch: {
+          type: Object,
+          computed: '_computeSketch(sketches, sketchName)',
+          notify: true,
+          observer: 'logFor'
+        }
+
+      },
+      logFor: function(newValue, oldValue) {
+          console.log('Sketches:', newValue);
+      },
+      _computeSketch: function(sketches, sketchName) {
+        console.log("set", sketches, sketchName);
+        for (var i = 0, sketch; sketch = sketches[i]; ++i) {
+          if (sketch.name === sketchName) {
+            return sketch;
+          }
+        }
+      }
+
+    });
+
+  })();
+  </script>
+</dom-module>
