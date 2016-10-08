@@ -62,7 +62,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           console.log('Sketches:', newValue);
       },
       _computeSketch: function(sketches, sketchName) {
-        console.log("set", sketches, sketchName);
+        console.log("find sketch", sketches, sketchName);
         for (var i = 0, sketch; sketch = sketches[i]; ++i) {
           if (sketch.name === sketchName) {
             return sketch;
