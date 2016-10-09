@@ -19,9 +19,17 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     <style is="custom-style">
       .flex-horizontal {
         @apply(--layout-horizontal);
+        @apply(--layout-wrap);
       }
       .flexchild {
         @apply(--layout-flex);
+        width: 50%;
+        min-width: 300px;
+
+      }
+      .content {
+        overflow-y: auto;
+        height: 100vh;
       }
     </style>
     <!-- app-location Should not be needed here?! -->
@@ -39,22 +47,26 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
 
     <div class="container flex-horizontal">
-       <div class="flexchild" style="background-color:red">
+       <div class="flexchild video" style="background-color:red">
 
          <google-youtube
            chromeless
            video-id="[[sketch.video]]"
            width="100%"
+           height="100vh"
            rel="0"
            start="5"
            autoplay="0"></google-youtube>
 
        </div>
-       <div class="flexchild" style="background-color:green">
-         <h1>View [[sketch.title]]</h1>
-         <iron-image style="width:400px; height:400px;" sizing="contain" src="[[sketch.image]]"></iron-image>
+       <div class="flexchild content" style="background-color:green">
+         <h1>[[sketch.title]]</h1>
+         <p>[[sketch.description]]</p>
+         <iron-image fade preload style="width:100%; height:400px;" sizing="contain" src="[[sketch.image]]"></iron-image>
        </div>
      </div>
+     <my-data sketch-name="[[sketch.name]]" neighbors="{{neighbors}}"></my-data>
+     <div class="flexfooter">[[neighbors.last.title]] – [[neighbors.next.title]]</div>
   </template>
 
     <script>
@@ -62,6 +74,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             is: 'my-detail',
             properties: {
                 sketch: Object,
+                next: String,
                 route: Object,
                 routeData: {
                     type: Object,

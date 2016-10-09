@@ -18,6 +18,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       {
         name: 'sketch1',
         title: 'Sketch A',
+        description: 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.',
         image: 'https://www.native-instruments.com/typo3temp/pics/img-ce-maschine-jam_subpage_feature-details_05_intuitivehardware_01-15f6603588ef58a16a9510839f65ab79-d@2x.jpg',
         video: '1_YyACZrj6E'
       },
@@ -25,11 +26,13 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         name: 'sketch2',
         title: 'Sketch B',
         image: '/images/image2.jpg',
+        description: 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.',
         video: 'bQyyuVP56fQ'
       },
       {
         name: 'sketch3',
         title: 'Sketch C',
+        description: 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.',
         image: '/images/image3.jpg',
         video: '1_YyACZrj6E'
       }
@@ -49,29 +52,41 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           readOnly: true,
           notify: true,
         },
-
         sketch: {
           type: Object,
           computed: '_computeSketch(sketches, sketchName)',
           notify: true,
-          observer: 'logFor'
+        },
+        neighbors: {
+          type: Object,
+          computed: '_computeNeighbors(sketches, sketchName)',
+          notify: true,
+          observer: 'logThis'
         }
-
       },
-      logFor: function(newValue, oldValue) {
-          console.log('Sketches:', newValue);
+      logThis: function(newValue, oldValue) {
+          console.log('Debug:', newValue);
       },
       _computeSketch: function(sketches, sketchName) {
-        console.log("find sketch", sketches, sketchName);
         for (var i = 0, sketch; sketch = sketches[i]; ++i) {
           if (sketch.name === sketchName) {
             return sketch;
           }
         }
+      },
+      _computeNeighbors: function(sketches, sketchName) {
+        for (var i = 0, sketch; sketch = sketches[i]; ++i) {
+          if (sketch.name === sketchName) {
+            var last = sketches[i-1];
+            var next = sketches[i+1];
+            return {
+              last: last,
+              next: next
+            }
+          }
+        }
       }
-
     });
-
   })();
   </script>
 </dom-module>
